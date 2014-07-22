@@ -1,0 +1,214 @@
+/* CSS Document */
+
+* {
+    margin:0;
+	padding:0;
+	}
+
+html {
+    width:100%;
+	height:100%;
+	font-size:62.5%;
+	font-family:Î¢ÈíÑÅºÚ;
+	}
+
+body {
+    width:100%;
+	height:100%;
+	background:#eaeaea;
+	position:relative;
+	}
+	
+.wrapper {
+    width:340px;
+	height:710px;
+	margin:5% auto;
+	position:relative;
+	background:url(../img/iPhone-5S-3-colors-Mock-up.png) no-repeat;
+	background-position:-1px 0;
+	}
+
+#game_bg {
+    width:290px;
+	height:510px;
+	margin:0px auto;
+	background:url(../img/orig-atlas.png) no-repeat;
+	background-position:0px 0px; 
+	position:absolute;
+	left:25px;
+	top:100px;
+	overflow:hidden;
+	}
+	
+#mask {
+	width:290px;
+	height:510px;
+	position:absolute;
+	left:23px;
+	top:101px;
+	background:red;
+	opacity:0;
+	z-index:3;
+	color:#fff;
+	font-size:200px;
+	font-family:ËÎÌå;
+	text-align:center;
+	line-height:400px;
+	-webkit-user-select:none;
+	cursor:pointer;
+}
+
+
+#play {
+    width:80px;
+	height:30px;
+	text-align:center;
+	color:#fff;
+	font-size:18px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	background-color:#e86101;
+	border:1px solid #533000;
+	box-shadow:0 2px 3px #533000;
+	position:absolute;
+	left:50%;
+	margin-left:-40px;
+	top:38%;
+	z-index:3;
+}
+
+#play span {
+    display:block;
+	width:76px;
+	height:26px;
+	line-height:26px;
+	border:2px solid #fff;
+	cursor:pointer;
+}
+
+#play span:hover {
+  border:2px solid #70c5c1;
+}
+
+#score {
+    width:100px;
+	text-align:center;
+	color:#fff;
+	text-shadow:0 0 3px #000;
+	font-size:18px;
+	font-weight:bolder;
+	font-family:Î¢ÈíÑÅºÚ;
+	position:absolute;
+	top:45%;
+	left:50%;
+	margin-left:-50px;
+	opacity:0;
+}
+
+
+#bird {
+    width:36px;
+	height:36px;
+	border-radius:18px;
+	position:absolute;
+	left:50%;
+	top:30%;
+	margin-left:-18px;
+	margin-top:-18px;
+	background:url(../img/atlas.png) no-repeat;
+	background-position:-5px -976px;
+	}
+
+.bird_fly {
+    -webkit-animation: fly .5s step-end infinite;
+}
+
+
+@-webkit-keyframes fly /* Safari ºÍ Chrome */
+{
+from {background-position:-5px -976px;}
+ 
+50%  {background-position:-61px -976px;}
+
+60% {background-position:-117px -976px;}
+}
+
+
+.bird_up{
+    -webkit-transition:-webkit-transform .3s ease-out;
+    -webkit-transform: rotate(-40deg);
+}
+
+.bird_down {
+    -webkit-transition:-webkit-transform .3s ease-out;
+    -webkit-transform: rotate(40deg);
+}
+
+.pipes {
+    display:block;
+	position:absolute;
+	top:0;
+	right:-52px;
+    width:52px;
+	height:420px;
+	list-style:none;
+	overflow:hidden;
+	-webkit-animation: slide 3s linear;
+}
+
+@-webkit-keyframes slide /* Safari ºÍ Chrome */
+{
+form { right:-52px; }
+to { right: 100%; }
+}
+
+
+.one,
+.two {
+    width:100%;
+	height:270px;
+	display:block;
+	background:url(../img/orig-atlas.png) no-repeat;
+	background-position:-604px 0px;
+	}
+	
+.one {
+    margin-top:-180px;
+}
+.two {
+    margin-top:120px;
+	background-position:-660px 0px;
+	}
+	
+
+#ground {
+   width:290px;
+   height:90px;
+   position:absolute;
+   top:420px;
+   background:url(../img/orig-atlas.png) no-repeat;
+   background-position:-293px 0;
+   -webkit-animation:go 0.2s linear infinite;
+   }
+ 
+@-webkit-keyframes go/* Safari ºÍ Chrome */
+{
+from { background-position:-293px 0; top: 420px; }
+to { background-position:-307px 0; top: 420px;}
+}
+	
+	
+	
+	.up {
+	
+	-webkit-transition:top .4s ease-out;
+	}
+	
+	.down {
+		-webkit-transition:top .8s ease-in;
+	}
+	
+	
+	
+	
+	
+	
