@@ -1,3 +1,2 @@
-flappy-bird
-===========
-很久之前做的 jQuery 练习，代码本身写得很烂，但居然做出来了，而且能玩。真是万幸。如果当时失败了，学习兴趣可能大减吧，哈~
+# flappy-bird
+flappy-bird game writen by `react` and `create-react-app`
