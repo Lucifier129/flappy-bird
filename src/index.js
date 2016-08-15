@@ -27,6 +27,7 @@ store.subscribe(data => {
 	if (key === 'START_PLAY') {
 		record.start(store)
 		record.save(nextState.initialState)
+		playing()
 		return
 	}
 
@@ -35,6 +36,7 @@ store.subscribe(data => {
 		renderToDOM()
 		if (nextState.game.status === 'over') {
 			record.finish()
+			stopPlaying()
 		}
 		return
 	}
@@ -47,11 +49,13 @@ store.subscribe(data => {
 })
 
 let { PLAYING } = store.actions
+let requestID = 0
 function playing() {
-	if (!record.getRecord().isRecording) {
-		PLAYING()
-	}
-	requestAnimationFrame(playing)
+	PLAYING()
+	requestID = requestAnimationFrame(playing)
+}
+function stopPlaying() {
+	cancelAnimationFrame(requestID)
 }
 
 renderToDOM()

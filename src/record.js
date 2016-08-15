@@ -26,6 +26,9 @@ export function finish() {
 }
 
 export function save(state) {
+	if (record.end) {
+		return
+	}
 	record.history.push(state)
 }
 
@@ -69,12 +72,12 @@ export function reverse() {
 	let count = 0
 	let read = () => {
 		if (count >= history.length) {
-			record.isRecording = false
 			replaceState(currentState, null, {
 				key,
 				currentState,
 				nextState: currentState,
 			})
+			record.isRecording = false
 			return
 		}
 		let nextState = history[history.length - 1 - count]
