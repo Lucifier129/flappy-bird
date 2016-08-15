@@ -13,9 +13,7 @@
     "fastclick": "^1.0.6",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
-    "react-lite": "^0.15.16",
-    "refer": "0.0.18",
-    "refer-logger": "0.0.6"
+    "refer": "0.0.18"
   },
   "scripts": {
     "start": "react-scripts start",

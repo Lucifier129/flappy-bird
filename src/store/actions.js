@@ -2,7 +2,6 @@
  * actions
  */
 
-
 export let FLY_UP = () => flyUp
 
 export let START_PLAY = () => state => {

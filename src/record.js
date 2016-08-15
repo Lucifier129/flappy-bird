@@ -1,23 +1,23 @@
-
+// recorder
 function getInitialRecord() {
     return {
         start: 0,
         end: 0,
         history: [],
+        isRecording: false,
+        store: null,
     }
 }
 
 let record = getInitialRecord()
 
-export function reset() {
+export function getRecord() {
+	return record
+}
+
+export function start(store) {
 	record = getInitialRecord()
-}
-
-export function save(state) {
-	record.history.push(state)
-}
-
-export function start() {
+	record.store = store
 	record.start = Date.now()
 }
 
@@ -25,21 +25,70 @@ export function finish() {
 	record.end = Date.now()
 }
 
-export function pipe(fn) {
-	let { start, end, history } = record
+export function save(state) {
+	record.history.push(state)
+}
+
+export function replay() {
+	let { start, end, history, store } = record
+	let { replaceState, getState } = store
+	let currentState = getState()
+	let key = 'TIME_TRAVEL'
 	let count = 0
 	let read = () => {
 		if (count >= history.length) {
-			return fn(null)
+			record.isRecording = false
+			replaceState(currentState, null, {
+				key,
+				currentState,
+				nextState: currentState,
+			})
+			return
 		}
-		fn(history[count], count)
+		let nextState = history[count]
+		let data = {
+			key,
+			currentState,
+			nextState,
+		}
+		replaceState(nextState, null, data)
+		count += 1
 		requestAnimationFrame(read)
 	}
+
+	record.isRecording = true
+
 	read()
 }
 
-let hook = {
-	DID_UPDATE: data => {
-		
+export function reverse() {
+	let { start, end, history, store } = record
+	let { replaceState, getState } = store
+	let currentState = getState()
+	let key = 'TIME_TRAVEL'
+	let count = 0
+	let read = () => {
+		if (count >= history.length) {
+			record.isRecording = false
+			replaceState(currentState, null, {
+				key,
+				currentState,
+				nextState: currentState,
+			})
+			return
+		}
+		let nextState = history[history.length - 1 - count]
+		let data = {
+			key,
+			currentState,
+			nextState,
+		}
+		replaceState(nextState, null, data)
+		count += 1
+		requestAnimationFrame(read)
 	}
+
+	record.isRecording = true
+
+	read()
 }
