@@ -65,7 +65,7 @@ function flying(state) {
         return dropDown(state)
     }
 
-    let { timestamp, originalHeight, targetHeight, flyTime, dropTime } = bird
+    let { timestamp, flyTime, dropTime } = bird
     let time = Date.now() - timestamp
 
     if (bird.height < bird.targetHeight) {

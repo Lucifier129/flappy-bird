@@ -22,7 +22,7 @@ function renderToDOM() {
 }
 
 store.subscribe(data => {
-	let { key, currentState, nextState } = data
+	let { key, nextState } = data
 
 	if (key === 'START_PLAY') {
 		record.start(store)
@@ -51,15 +51,14 @@ store.subscribe(data => {
 let { PLAYING } = store.actions
 let requestID = 0
 function playing() {
-	PLAYING()
 	requestID = requestAnimationFrame(playing)
+	PLAYING()
 }
 function stopPlaying() {
 	cancelAnimationFrame(requestID)
 }
 
 renderToDOM()
-playing()
 
 if ('ontouchstart' in document) {
 	Fastclick.attach(document.body)

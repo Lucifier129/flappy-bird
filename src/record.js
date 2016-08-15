@@ -12,86 +12,73 @@ function getInitialRecord() {
 let record = getInitialRecord()
 
 export function getRecord() {
-	return record
+    return record
 }
 
 export function start(store) {
-	record = getInitialRecord()
-	record.store = store
-	record.start = Date.now()
+    record = getInitialRecord()
+    record.store = store
+    record.start = Date.now()
 }
 
 export function finish() {
-	record.end = Date.now()
+    record.end = Date.now()
+    record.isRecording = true
 }
 
 export function save(state) {
-	if (record.end) {
-		return
-	}
-	record.history.push(state)
+    if (record.end) {
+        return
+    }
+    record.history.push(state)
 }
 
 export function replay() {
-	let { start, end, history, store } = record
-	let { replaceState, getState } = store
-	let currentState = getState()
-	let key = 'TIME_TRAVEL'
-	let count = 0
-	let read = () => {
-		if (count >= history.length) {
-			record.isRecording = false
-			replaceState(currentState, null, {
-				key,
-				currentState,
-				nextState: currentState,
-			})
-			return
-		}
-		let nextState = history[count]
-		let data = {
-			key,
-			currentState,
-			nextState,
-		}
-		replaceState(nextState, null, data)
-		count += 1
-		requestAnimationFrame(read)
-	}
+    let { history, store } = record
+    let { replaceState } = store
+    let key = 'TIME_TRAVEL'
+    let count = 0
+    let read = () => {
+        if (count >= history.length) {
+            return
+        }
+        let nextState = history[count]
+        let data = {
+            key,
+            nextState,
+        }
+        replaceState(nextState, null, data)
+        count += 1
+        requestAnimationFrame(read)
+    }
 
-	record.isRecording = true
-
-	read()
+    read()
 }
 
 export function reverse() {
-	let { start, end, history, store } = record
-	let { replaceState, getState } = store
-	let currentState = getState()
-	let key = 'TIME_TRAVEL'
-	let count = 0
-	let read = () => {
-		if (count >= history.length) {
-			replaceState(currentState, null, {
-				key,
-				currentState,
-				nextState: currentState,
-			})
-			record.isRecording = false
-			return
-		}
-		let nextState = history[history.length - 1 - count]
-		let data = {
-			key,
-			currentState,
-			nextState,
-		}
-		replaceState(nextState, null, data)
-		count += 1
-		requestAnimationFrame(read)
-	}
+    let { history, store } = record
+    let { replaceState } = store
+    let key = 'TIME_TRAVEL'
+    let count = 0
+    let read = () => {
+        if (count >= history.length) {
+            let nextState = history[history.length - 1]
+            let data = {
+                key,
+                nextState,
+            }
+            replaceState(nextState, null, data)
+            return
+        }
+        let nextState = history[history.length - 1 - count]
+        let data = {
+            key,
+            nextState,
+        }
+        replaceState(nextState, null, data)
+        count += 1
+        requestAnimationFrame(read)
+    }
 
-	record.isRecording = true
-
-	read()
+    read()
 }

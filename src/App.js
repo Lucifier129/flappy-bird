@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import classnames from 'classnames'
 import Bird from './components/Bird'
 import Piping from './components/Piping'
 import Menu from './components/Menu'
 
 export default function App({ state, actions, record }) {
-    let { bird, pipings, game, player, viewport } = state
+    let { bird, pipings, game, player } = state
     let { FLY_UP, START_PLAY } = actions
     let recordState = record.getRecord()
     let { isRecording, history } = recordState
