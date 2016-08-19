@@ -1,2 +1,2 @@
 # flappy-bird
-flappy-bird game writen by `react` and `create-react-app`
+flappy-bird game written by `react` and `create-react-app`
