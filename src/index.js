@@ -14,42 +14,38 @@ let state = {
 
 let store = createStore(state)
 
-function renderToDOM() {
+function renderToDOM(state) {
 	return ReactDOM.render(
-	  <App state={store.getState()} actions={store.actions} record={record} />,
+	  <App state={state || store.getState()} actions={store.actions} record={record} />,
 	  document.getElementById('root')
 	)
 }
 
-store.subscribe(data => {
-	let { key, nextState } = data
+record.setRender(renderToDOM)
 
-	if (key === 'START_PLAY') {
-		record.start(store)
-		record.save(nextState.initialState)
+store.subscribe(data => {
+	let { actionType, currentState } = data
+
+	if (actionType === 'START_PLAY') {
+		record.start()
+		record.save(currentState.initialState)
 		playing()
 		return
 	}
 
-	if (key === 'PLAYING' || key === 'FLY_UP') {
-		record.save(nextState)
+	if (actionType === 'PLAYING' || actionType === 'FLY_UP') {
+		record.save(currentState)
 		renderToDOM()
-		if (nextState.game.status === 'over') {
+		if (currentState.game.status === 'over') {
 			record.finish()
 			stopPlaying()
 		}
 		return
 	}
-
-	if (key === 'TIME_TRAVEL') {
-		renderToDOM()
-		return
-	}
-
 })
 
 let { PLAYING } = store.actions
-let requestID = 0
+let requestID = null
 function playing() {
 	requestID = requestAnimationFrame(playing)
 	PLAYING()

@@ -1,8 +1,6 @@
-import { createStore } from 'refer'
+import { createStore } from 'relite'
 import * as actions from './actions'
 
-let handler = [actions]
-
 export default function(initialState) {
-    return createStore(handler, initialState)
+    return createStore(actions, initialState)
 }

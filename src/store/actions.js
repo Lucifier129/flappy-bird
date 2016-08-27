@@ -2,9 +2,7 @@
  * actions
  */
 
-export let FLY_UP = () => flyUp
-
-export let START_PLAY = () => state => {
+export let START_PLAY = (state) => {
     let game = {...state.game }
     game.status = 'playing'
     let nextState = {
@@ -12,24 +10,14 @@ export let START_PLAY = () => state => {
         ...state.initialState,
         game,
     }
-    return flyUp(nextState)
+    return FLY_UP(nextState)
 }
 
-export let PLAYING = () => state => {
-    let gameStatus = state.game.status
-    if (gameStatus === 'over') {
-        return state
-    }
-    let nextState = flying(state)
-    nextState = sliding(nextState)
-    nextState = collisitionDetection(nextState)
-    return nextState
-}
-
-function flyUp(state) {
+export let FLY_UP = (state) => {
     if (state.bird.height >= state.game.range.max) {
         return state
     }
+
     let bird = {...state.bird }
     bird.status = 'up'
     bird.originalHeight = bird.height
@@ -46,6 +34,18 @@ function flyUp(state) {
         bird,
     }
 }
+
+export let PLAYING = (state) => {
+    let gameStatus = state.game.status
+    if (gameStatus === 'over') {
+        return state
+    }
+    let nextState = flying(state)
+    nextState = sliding(nextState)
+    nextState = collisitionDetection(nextState)
+    return nextState
+}
+
 
 function dropDown(state) {
     let bird = {...state.bird }
